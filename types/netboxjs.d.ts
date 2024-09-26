@@ -3,8 +3,8 @@ declare module 'netboxjs' {
   import { AxiosRequestConfig, AxiosResponse } from 'axios';
 
   interface NetboxOptions {
-    baseUrl: string;
-    apiKey: string;
+    host: string;
+    token: string;
   }
 
   class Netbox {
