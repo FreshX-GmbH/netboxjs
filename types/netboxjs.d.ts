@@ -53,11 +53,10 @@ declare module 'netboxjs' {
     // Füge weitere Eigenschaften hinzu, die relevant sind
   }
 
-  export interface GetTenantsResponse {
+  export interface GetTenantsResponse extends AxiosResponse {
     count: number;              // Anzahl der gefundenen Mietern
     next: string | null;        // URL für die nächste Seite der Ergebnisse
     previous: string | null;    // URL für die vorherige Seite der Ergebnisse
-    results: Tenant[];          // Array von Mietern
   }
 
 
@@ -68,11 +67,10 @@ declare module 'netboxjs' {
     // Füge weitere Eigenschaften hinzu, die relevant sind
   }
 
-  export interface GetInterfacesResponse {
+  export interface GetInterfacesResponse extends AxiosResponse {
     count: number;                 // Anzahl der gefundenen Interfaces
     next: string | null;           // URL für die nächste Seite der Ergebnisse
     previous: string | null;       // URL für die vorherige Seite der Ergebnisse
-    results: Interface[];          // Array von Interfaces
   }
 
   export interface CreateInterfaceData {
@@ -88,11 +86,10 @@ export interface IPAddress {
     // Weitere relevante Eigenschaften
   }
 
-  export interface GetIPAddressesResponse {
+  export interface GetIPAddressesResponse extends AxiosResponse {
     count: number;                 // Anzahl der gefundenen IP-Adressen
     next: string | null;           // URL für die nächste Seite der Ergebnisse
     previous: string | null;       // URL für die vorherige Seite der Ergebnisse
-    results: IPAddress[];          // Array von IP-Adressen
   }
 
   export interface AvailableIPResponse {
@@ -112,18 +109,10 @@ export interface IPAddress {
     // Weitere aktualisierbare Eigenschaften hinzufügen
   }
 
-export interface VirtualMachine {
-    id: number;                    // Eindeutige ID der virtuellen Maschine
-    name: string;                  // Name der virtuellen Maschine
-    status: string;                // Status der virtuellen Maschine (z.B. "active", "stopped")
-    // Weitere relevante Eigenschaften
-  }
-
-  export interface GetVirtualMachinesResponse {
+  export interface GetVirtualMachinesResponse extends AxiosResponse {
     count: number;                 // Anzahl der gefundenen virtuellen Maschinen
     next: string | null;           // URL für die nächste Seite der Ergebnisse
     previous: string | null;       // URL für die vorherige Seite der Ergebnisse
-    results: VirtualMachine[];     // Array von virtuellen Maschinen
   }
 
   export interface CreateVirtualMachineData {
@@ -146,12 +135,113 @@ export interface VirtualMachine {
     // Weitere relevante Eigenschaften
   }
 
-  export interface GetVlansResponse {
+  export interface GetVlansResponse extends AxiosResponse {
     count: number;                 // Anzahl der gefundenen VLANs
     next: string | null;           // URL für die nächste Seite der Ergebnisse
     previous: string | null;       // URL für die vorherige Seite der Ergebnisse
-    results: Vlan[];               // Array von VLANs
   }
+
+export interface Tag {
+    id: number;
+    url: string;
+    display: string;
+    name: string;
+    slug: string;
+    color: string;
+}
+
+export interface TenantGroup {
+    id: number;
+    url: string;
+    display: string;
+    name: string;
+    slug: string;
+    _depth: number;
+}
+
+export interface Tenant {
+    id: number;
+    url: string;
+    display: string;
+    name: string;
+    slug: string;
+    group: TenantGroup;
+    description: string;
+    comments: string;
+    tags: Tag[];
+    custom_fields: Record<string, unknown>;
+    created: string;
+    last_updated: string;
+    circuit_count: number;
+    device_count: number;
+    ipaddress_count: number;
+    prefix_count: number;
+    rack_count: number;
+    site_count: number;
+    virtualmachine_count: number;
+    vlan_count: number;
+    vrf_count: number;
+    cluster_count: number;
+}
+
+export interface Status {
+    value: string;
+    label: string;
+}
+
+export interface Site {
+    id: number;
+    url: string;
+    display: string;
+    name: string;
+    slug: string;
+}
+
+export interface Cluster {
+    id: number;
+    url: string;
+    display: string;
+    name: string;
+}
+
+export interface Role {
+    id: number;
+    url: string;
+    display: string;
+    name: string;
+    slug: string;
+}
+
+export interface Platform {
+    id: number;
+    url: string;
+    display: string;
+    name: string;
+    slug: string;
+}
+
+export interface PrimaryIP {
+    id: number;
+    url: string;
+    display: string;
+    family: number;
+    address: string;
+}
+
+export interface VirtualMachine {
+    id: number;
+    url: string;
+    display: string;
+    name: string;
+    ref: string;
+    status: Status;
+    site: Site;
+    cluster: Cluster;
+    device: string | null;
+    role: Role;
+    tenant: Tenant
+    tags: Tag[];
+}
 
   export = Netbox;
 }
