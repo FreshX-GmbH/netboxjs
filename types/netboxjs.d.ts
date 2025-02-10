@@ -23,6 +23,7 @@ declare module 'netboxjs' {
     createInterface(data: CreateInterfaceData): Promise<Interface>;
 
     getIPAddresses(params?: PaginationOptions): Promise<GetIPAddressesResponse>;
+    getIPAddress(address: string): Promise<GetIPAddressResponse>;    
     getAvailableIPs(prefix: string, data?: Record<string, any>): Promise<AvailableIPResponse>;
     createNextIPAddress(prefix: string, data: Record<string, any>): Promise<IPAddress>;
     createIPAddress(data: CreateIPAddressData): Promise<IPAddress>;
