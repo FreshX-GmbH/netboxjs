@@ -25,6 +25,7 @@ declare module 'netboxjs' {
     getIPAddresses(params?: PaginationOptions): Promise<GetIPAddressesResponse>;
     getIPAddress(address: string): Promise<GetIPAddressResponse>;    
     getAvailableIPs(prefix: string, data?: Record<string, any>): Promise<AvailableIPResponse>;
+    getPrefix(prefix: string): Promise<GetIPAddressResponse>;    
     createNextIPAddress(prefix: string, data: Record<string, any>): Promise<IPAddress>;
     createIPAddress(data: CreateIPAddressData): Promise<IPAddress>;
     updateIPAddress(data: UpdateIPAddressData): Promise<IPAddress>;
