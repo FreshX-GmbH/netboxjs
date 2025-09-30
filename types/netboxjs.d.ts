@@ -17,7 +17,7 @@ declare module 'netboxjs' {
 
     options: NetBoxClientOptions;
 
-    getTenants(params?: PaginationOptions): Promise<GetTenantsResponse>;
+    getTenants(params?: PaginationOptions, query?: query): Promise<GetTenantsResponse>;
 
     getInterfaces(params?: PaginationOptions): Promise<GetInterfacesResponse>;
     createInterface(data: CreateInterfaceData): Promise<Interface>;
@@ -108,7 +108,7 @@ export interface IPAddress {
   disk?: number;                 // Gesamtgröße der Disks (in MiB oder GiB, je API)
   serial?: string;               // Seriennummer optional
   description?: string;          // Beschreibung
-  status?: Status;               // Status, z. B. "active", "stopped" etc.
+  status?: string;               // Status, z. B. "active", "stopped" etc.
   role?: Role;
   platform?: Platform;
   tags?: string[];               // Tags
