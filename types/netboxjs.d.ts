@@ -98,12 +98,29 @@ export interface IPAddress {
     available_ips: string[];       // Liste der verfügbaren IP-Adressen
   }
 
-  export interface CreateIPAddressData {
-    address: string;               // Die zu erstellende IP-Adresse
-    status?: string;               // Optionaler Status der IP-Adresse
-    // Weitere erforderliche Eigenschaften hinzufügen
-  }
-
+export interface CreateVirtualMachineData {
+  name: string;                 // Pflichtfeld: Name der VM
+  cluster?: number | string;    // ID oder eindeutiger Name des Clusters
+  site?: number | string;       // optional: Standort (Site)
+  device?: number | string;     // Hostgerät (physischer Host), falls relevant
+  platform?: number | string;   // optional: Platform / OS Type
+  vcpus?: number;                // Anzahl vCPUs (kann auch Float sein)
+  memory?: number;               // Arbeitsspeicher in MiB
+  disk?: number;                 // Gesamtgröße der Disks (in MiB oder GiB, je API)
+  serial?: string;               // Seriennummer optional
+  description?: string;          // Beschreibung
+  status?: string;               // Status, z. B. "active", "stopped" etc.
+  tags?: string[];               // Tags
+  tenant?: number | string;      // Tenant ID oder Name
+  primary_ip4?: string;          // z. B. "192.168.1.10/24"
+  primary_ip6?: string;          // z. B. "2001:db8::1/64"
+  local_context_data?: Record<string, any>; // kontextspezifische Daten (JSON)
+  custom_fields?: Record<string, any>;     // benutzerdefinierte Felder
+  virtual_machine_role?: number | string;  // Rolle der VM, falls modelliert
+  headers?: Record<string, string>;         // optionale Headers (z.B. zusätzliche Auth)
+  // Falls du Query-Parameter übergeben willst (z. B. filtering etc.)
+  query_params?: Record<string, string | number | boolean>;
+}
   export interface UpdateIPAddressData {
     id: number;                    // ID der zu aktualisierenden IP-Adresse
     address?: string;              // Neue IP-Adresse (optional)
