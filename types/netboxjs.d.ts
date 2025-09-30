@@ -17,15 +17,15 @@ declare module 'netboxjs' {
 
     options: NetBoxClientOptions;
 
-    getTenants(params?: PaginationOptions, query?: query): Promise<GetTenantsResponse>;
+    getTenants(params?: Record<string,any>, query?: string): Promise<GetTenantsResponse>;
 
     getInterfaces(params?: PaginationOptions): Promise<GetInterfacesResponse>;
     createInterface(data: CreateInterfaceData): Promise<Interface>;
 
     getIPAddresses(params?: PaginationOptions): Promise<GetIPAddressesResponse>;
-    getIPAddress(address: string): Promise<GetIPAddressResponse>;    
+    getIPAddress(address: string): Promise<GetIPAddressResponse>;
     getAvailableIPs(prefix: string, data?: Record<string, any>): Promise<AvailableIPResponse>;
-    getPrefix(prefix: string): Promise<GetIPAddressResponse>;    
+    getPrefix(prefix: string): Promise<GetIPAddressResponse>;
     createNextIPAddress(prefix: string, data: Record<string, any>): Promise<IPAddress>;
     createIPAddress(data: CreateIPAddressData): Promise<IPAddress>;
     updateIPAddress(data: UpdateIPAddressData): Promise<IPAddress>;
@@ -50,9 +50,8 @@ declare module 'netboxjs' {
   }
 
   export interface Tenant {
-    id: number;                 // Eindeutige ID des Mieters
-    name: string;               // Name des Mieters
-    // Füge weitere Eigenschaften hinzu, die relevant sind
+    id: number;
+    name: string;
   }
 
   export interface GetTenantsResponse extends AxiosResponse {
@@ -75,12 +74,6 @@ declare module 'netboxjs' {
     previous: string | null;       // URL für die vorherige Seite der Ergebnisse
   }
 
-  export interface CreateInterfaceData {
-    name: string;                  // Name des zu erstellenden Interfaces
-    type: string;                  // Typ des zu erstellenden Interfaces
-    // Füge weitere erforderliche Eigenschaften hinzu
-  }
-
 export interface IPAddress {
     id: number;                    // Eindeutige ID der IP-Adresse
     address: string;               // Die IP-Adresse
@@ -98,29 +91,10 @@ export interface IPAddress {
     available_ips: string[];       // Liste der verfügbaren IP-Adressen
   }
 
-  export interface CreateVirtualMachineData {
-  name: string;                 // Pflichtfeld: Name der VM
-  cluster?: Cluster;    // ID oder eindeutiger Name des Clusters
-  site?: number | string;       // optional: Standort (Site)
-  device?: number | string;     // Hostgerät (physischer Host), falls relevant
-  vcpus?: number;                // Anzahl vCPUs (kann auch Float sein)
-  memory?: number;               // Arbeitsspeicher in MiB
-  disk?: number;                 // Gesamtgröße der Disks (in MiB oder GiB, je API)
-  serial?: string;               // Seriennummer optional
-  description?: string;          // Beschreibung
-  status?: string;               // Status, z. B. "active", "stopped" etc.
-  role?: Role;
-  platform?: Platform;
-  tags?: string[];               // Tags
-  tenant?: Tenant;      // Tenant ID oder Name
-  primary_ip4?: string;          // z. B. "192.168.1.10/24"
-  primary_ip6?: string;          // z. B. "2001:db8::1/64"
-  local_context_data?: Record<string, any>; // kontextspezifische Daten (JSON)
-  custom_fields?: Record<string, any>;     // benutzerdefinierte Felder
-  virtual_machine_role?: number | string;  // Rolle der VM, falls modelliert
-  headers?: Record<string, string>;         // optionale Headers (z.B. zusätzliche Auth)
-  // Falls du Query-Parameter übergeben willst (z. B. filtering etc.)
-  query_params?: Record<string, string | number | boolean>;
+  export interface CreateIPAddressData {
+    address: string;               // Die zu erstellende IP-Adresse
+    status?: string;               // Optionaler Status der IP-Adresse
+    // Weitere erforderliche Eigenschaften hinzufügen
   }
 
   export interface UpdateIPAddressData {
@@ -137,10 +111,29 @@ export interface IPAddress {
   }
 
   export interface CreateVirtualMachineData {
-    name: string;                  // Name der zu erstellenden virtuellen Maschine
-    status?: string;               // Optionaler Status der virtuellen Maschine
-    // Weitere erforderliche Eigenschaften hinzufügen
-  }
+  name: string;                 // Pflichtfeld: Name der VM
+  cluster?: Cluster;    // ID oder eindeutiger Name des Clusters
+  site?: number | string;       // optional: Standort (Site)
+  device?: number | string;     // Hostgerät (physischer Host), falls relevant
+  vcpus?: number;                // Anzahl vCPUs (kann auch Float sein)
+  memory?: number;               // Arbeitsspeicher in MiB
+  disk?: number;                 // Gesamtgröße der Disks (in MiB oder GiB, je API)
+  serial?: string;               // Seriennummer optional
+  description?: string;          // Beschreibung
+  status?: string;               // Status, z. B. "active", "stopped" etc.
+  role?: Role;
+  platform?: Platform;
+  tags?: string[];               // Tags
+  tenant?: any;      // Tenant ID oder Name
+  primary_ip4?: string;          // z. B. "192.168.1.10/24"
+  primary_ip6?: string;          // z. B. "2001:db8::1/64"
+  local_context_data?: Record<string, any>; // kontextspezifische Daten (JSON)
+  custom_fields?: Record<string, any>;     // benutzerdefinierte Felder
+  virtual_machine_role?: number | string;  // Rolle der VM, falls modelliert
+  headers?: Record<string, string>;         // optionale Headers (z.B. zusätzliche Auth)
+  // Falls du Query-Parameter übergeben willst (z. B. filtering etc.)
+  query_params?: Record<string, string | number | boolean>;
+}
 
   export interface UpdateVirtualMachineData {
     id: number;                    // ID der zu aktualisierenden virtuellen Maschine
@@ -212,10 +205,10 @@ export interface Status {
 
 export interface Site {
     id: number;
-    url?: string;
-    display?: string;
-    name?: string;
-    slug?: string;
+    url: string;
+    display: string;
+    name: string;
+    slug: string;
 }
 
 export interface Cluster {
