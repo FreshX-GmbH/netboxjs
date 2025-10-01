@@ -18,6 +18,7 @@ declare module 'netboxjs' {
     options: NetBoxClientOptions;
 
     getTenants(params?: Record<string,any>, query?: string): Promise<GetTenantsResponse>;
+    getTenant(query: string): Promise<GetTenantsResponse>;
 
     getInterfaces(params?: PaginationOptions): Promise<GetInterfacesResponse>;
     createInterface(data: CreateInterfaceData): Promise<Interface>;
@@ -26,7 +27,7 @@ declare module 'netboxjs' {
     getIPAddress(address: string): Promise<GetIPAddressResponse>;
     getAvailableIPs(prefix: string, data?: Record<string, any>): Promise<AvailableIPResponse>;
     getPrefix(prefix: string): Promise<GetIPAddressResponse>;
-    createNextIPAddress(prefix: string, data: Record<string, any>): Promise<IPAddress>;
+    createNextIPAddress(prefix: number, data: Record<string, any>): Promise<IPAddress>;
     createIPAddress(data: CreateIPAddressData): Promise<IPAddress>;
     updateIPAddress(data: UpdateIPAddressData): Promise<IPAddress>;
 
@@ -34,7 +35,7 @@ declare module 'netboxjs' {
     createVirtualMachine(data: CreateVirtualMachineData): Promise<VirtualMachine>;
     updateVirtualMachine(data: UpdateVirtualMachineData): Promise<VirtualMachine>;
 
-    getVlans(params?: Record<string, any>): Promise<GetVlansResponse>;
+    getVlans(params?: string): Promise<GetVlansResponse>;
 
   }
 
@@ -97,11 +98,22 @@ export interface IPAddress {
     // Weitere erforderliche Eigenschaften hinzufügen
   }
 
-  export interface UpdateIPAddressData {
-    id: number;                    // ID der zu aktualisierenden IP-Adresse
-    address?: string;              // Neue IP-Adresse (optional)
-    status?: string;               // Neuer Status (optional)
-    // Weitere aktualisierbare Eigenschaften hinzufügen
+  export interface UpdateVirtualMachineData {
+      id: number,
+      name?: string; // Name der VM
+      status?: 'active' | 'offline' | 'planned' | 'staged' | 'failed' | 'decommissioning'; // Status der VM
+      site?: number | null; // ID der Site
+      cluster?: number | null; // ID des Clusters
+      primary_ip4?: number | null; // ID der primären IPv4-Adresse
+      primary_ip6?: number | null; // ID der primären IPv6-Adresse
+      tenant?: number | null; // ID des Tenants
+      role?: number | null; // ID der Rolle
+      vcpus?: number | null; // Anzahl der vCPUs
+      memory?: number | null; // RAM in MB
+      disk?: number | null; // Festplattenspeicher in GB
+      comments?: string; // Kommentare
+      tags?: { id: number; name: string; slug: string }[]; // Tags
+      custom_fields?: { [key: string]: any };
   }
 
   export interface GetVirtualMachinesResponse extends AxiosResponse {
@@ -135,7 +147,7 @@ export interface IPAddress {
   query_params?: Record<string, string | number | boolean>;
 }
 
-  export interface UpdateVirtualMachineData {
+  export interface UpdateIPAdressData {
     id: number;                    // ID der zu aktualisierenden virtuellen Maschine
     name?: string;                 // Neuer Name (optional)
     status?: string;               // Neuer Status (optional)
