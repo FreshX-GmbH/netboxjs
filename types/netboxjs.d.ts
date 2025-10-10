@@ -31,7 +31,7 @@ declare module 'netboxjs' {
     createIPAddress(data: CreateIPAddressData): Promise<IPAddress>;
     updateIPAddress(data: UpdateIPAddressData): Promise<IPAddress>;
 
-    getVirtualMachines(params?: Record<string, any>, query:string): Promise<GetVirtualMachinesResponse>;
+    getVirtualMachines(params?: Record<string, any>, query:string?): Promise<GetVirtualMachinesResponse>;
     createVirtualMachine(data: CreateVirtualMachineData): Promise<VirtualMachine>;
     updateVirtualMachine(data: UpdateVirtualMachineData): Promise<VirtualMachine>;
 
