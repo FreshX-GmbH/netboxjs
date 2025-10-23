@@ -35,7 +35,7 @@ declare module 'netboxjs' {
     createVirtualMachine(data: CreateVirtualMachineData): Promise<VirtualMachine>;
     updateVirtualMachine(data: UpdateVirtualMachineData): Promise<VirtualMachine>;
 
-    getVlans(params?: string): Promise<GetVlansResponse>;
+    getVlans(query?: string): Promise<GetVlansResponse>;
 
   }
 
