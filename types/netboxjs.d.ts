@@ -20,7 +20,7 @@ declare module 'netboxjs' {
     getTenants(params?: Record<string,any>, query?: string): Promise<GetTenantsResponse>;
     getTenant(query: string): Promise<GetTenantsResponse>;
 
-    getInterfaces(params?: PaginationOptions): Promise<GetInterfacesResponse>;
+    getInterfaces(params?: PaginationOptions, query?: string): Promise<GetInterfacesResponse>;
     createInterface(data: CreateInterfaceData): Promise<Interface>;
 
     getIPAddresses(params?: PaginationOptions): Promise<GetIPAddressesResponse>;
@@ -31,7 +31,7 @@ declare module 'netboxjs' {
     createIPAddress(data: CreateIPAddressData): Promise<IPAddress>;
     updateIPAddress(data: UpdateIPAddressData): Promise<IPAddress>;
 
-    getVirtualMachines(params?: Record<string, any>, query:string?): Promise<GetVirtualMachinesResponse>;
+    getVirtualMachines(params?: Record<string, any>, query?:string): Promise<GetVirtualMachinesResponse>;
     createVirtualMachine(data: CreateVirtualMachineData): Promise<VirtualMachine>;
     updateVirtualMachine(data: UpdateVirtualMachineData): Promise<VirtualMachine>;
 
